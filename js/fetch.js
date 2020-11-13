@@ -7,6 +7,7 @@ export default function () {
     currenciesForm: document.querySelector(".currency-form"),
     currencies: document.querySelector("#currencies"),
   };
+  let initCurrency = "USD";
 
   const updateInSecs = async () => {
     let i = 30;
@@ -16,7 +17,9 @@ export default function () {
         i = 30;
         clearInterval(interval);
       }
-      btcPrice.updateIn.innerHTML = `Next update in <span>${i}</span> secs.`;
+      btcPrice.updateIn.innerHTML = `Next update in <span>${i}</span> ${
+        i > 1 ? "secs" : "sec"
+      }.`;
     }, 1000);
   };
 
@@ -31,8 +34,6 @@ export default function () {
     }
   };
 
-  let initCurrency = "USD";
-
   const bitFetch = async () => {
     try {
       btcPrice.updateIn.innerHTML = `Fetching Price...`;
@@ -43,8 +44,8 @@ export default function () {
       updateInSecs();
       updatePrice(price, initCurrency);
 
-      const selectCurrency = (event) => {
-        const currency = event.target.value;
+      const selectCurrency = ({ target }) => {
+        const currency = target.value;
         updatePrice(price, currency);
         initCurrency = currency;
       };
