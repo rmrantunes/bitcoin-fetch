@@ -9,7 +9,7 @@ export default function () {
       new: mutation.addedNodes,
       old: mutation.removedNodes,
     };
-    if (changes.new.length !== 0 && changes.old.length !== 0) {
+    if (changes.new.length && changes.old.length) {
       const priceChange = {
         new: +changes.new[0].nodeValue,
         old: +changes.old[0].nodeValue,
