@@ -14,7 +14,6 @@ export default function () {
         new: +changes.new[0].nodeValue,
         old: +changes.old[0].nodeValue,
       };
-      console.log(priceChange.new, priceChange.old);
       const cssClass =
         priceChange.new < priceChange.old ? "price-down" : "price-up";
       btcPrice.p.classList.add(cssClass);
