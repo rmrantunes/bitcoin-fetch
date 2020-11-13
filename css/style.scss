@@ -1,0 +1,237 @@
+$dark-primary: #222;
+$dark-secondary: #333;
+$text-primary: #fff;
+//
+$light-primary: #ddd;
+$light-secondary: #eee;
+$light-text-primary: #000;
+
+@mixin flexCenter() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin mobile() {
+  @media (max-width: 720px) {
+    @content;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Turret Road", cursive;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.view {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.header {
+  background-color: $dark-primary;
+  padding: 1rem;
+}
+.header-content {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  form {
+    @include flexCenter();
+    label {
+      margin-right: 1rem;
+      color: $text-primary;
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+  }
+}
+
+.bitcoin {
+  background-color: $dark-secondary;
+  flex: 1;
+  @include flexCenter();
+  .container {
+    min-height: 100%;
+    width: 90%;
+    max-width: 720px;
+  }
+}
+.bitcoin-content {
+  height: inherit;
+  width: 100%;
+  @include flexCenter();
+  flex-direction: column;
+  img {
+    width: 10vw;
+    @include mobile {
+      width: 20vw;
+    }
+  }
+}
+
+.bitcoin-price {
+  margin-top: 2rem;
+  background-color: $dark-primary;
+  width: 100%;
+  padding: 1rem 0;
+  @include flexCenter();
+  flex-direction: column;
+
+  #currencies {
+    width: 100px;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background-color: $dark-secondary;
+    border: none;
+    color: $text-primary;
+    font-size: 1.125rem;
+  }
+
+  .price {
+    font-size: 3rem;
+    letter-spacing: 2px;
+    color: $text-primary;
+    padding: 0.5rem 1rem;
+    height: 100%;
+  }
+  & > span {
+    margin-top: 0.75rem;
+    color: $text-primary;
+  }
+  .update-in {
+    color: $text-primary;
+  }
+}
+
+.footer {
+  background-color: $dark-primary;
+  color: $text-primary;
+  font-size: 1.125rem;
+  padding: 1.5rem 0;
+  p {
+    text-align: center;
+  }
+  a {
+    color: orange;
+    font-weight: 700;
+  }
+}
+
+// Animation
+
+.price-up {
+  animation: priceUp 1.5s;
+}
+
+.price-down {
+  animation: priceDown 1.5s;
+}
+
+@keyframes priceUp {
+  from {
+    background-color: rgb(0, 128, 0);
+  }
+  to {
+    background-color: rgba(0, 128, 0, 0);
+  }
+}
+
+@keyframes priceDown {
+  from {
+    background-color: rgb(255, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 128, 0, 0);
+  }
+}
+
+// Light Theme
+.light {
+  .header {
+    background-color: $light-primary;
+  }
+  .header-content {
+    form {
+      label {
+        color: $light-text-primary;
+      }
+    }
+  }
+  .bitcoin {
+    background-color: $light-secondary;
+  }
+  .bitcoin-price {
+    background-color: $light-primary;
+
+    #currencies {
+      background-color: $light-secondary;
+      color: $light-text-primary;
+    }
+    .price {
+      color: $light-text-primary;
+    }
+    & > span {
+      color: $light-text-primary;
+    }
+    .update-in {
+      color: $light-text-primary;
+    }
+  }
+  .footer {
+    background-color: $light-primary;
+    color: $light-text-primary;
+  }
+}
+
+// Check box
+input[type="checkbox"] {
+  transform: scale(0.75);
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  width: 80px;
+  height: 40px;
+
+  background-color: $light-secondary;
+  -webkit-appearance: none;
+
+  border-radius: 20px;
+
+  transition: 0.5 ease;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+
+  &::after {
+    content: "";
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    position: absolute;
+    transform: scale(0.8);
+    background-color: white;
+    transition: all 0.5s ease;
+    top: 0;
+    left: 0;
+  }
+}
+
+input:checked[type="checkbox"] {
+  background-color: #0af;
+  &::after {
+    left: 40px;
+  }
+}
