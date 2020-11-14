@@ -7,7 +7,9 @@ export default function () {
     currenciesForm: document.querySelector(".currency-form"),
     currencies: document.querySelector("#currencies"),
   };
-  let initCurrency = "USD";
+  const URLPattern = /(?<=\/)[A-Z]{3}/g;
+  const URLCurrency = location.href.match(URLPattern);
+  let initCurrency = URLCurrency ? URLCurrency[0] : "USD";
 
   const updateInSecs = async () => {
     let i = 30;
@@ -44,12 +46,24 @@ export default function () {
       updateInSecs();
       updatePrice(price, initCurrency);
 
-      const selectCurrency = ({ target }) => {
-        const currency = target.value;
+      btcPrice.currencies.value = initCurrency;
+
+      const selectCurrency = ({ target }, href, updateURL = true) => {
+        const currency = target ? target.value : href;
         updatePrice(price, currency);
+        updateURL && window.history.pushState(null, null, `${currency}`);
         initCurrency = currency;
       };
 
+      const onURLStateChange = () => {
+        const URLCurrency = location.href.match(URLPattern);
+        const initCurrency = URLCurrency ? URLCurrency[0] : "USD";
+        btcPrice.currencies.value = initCurrency;
+        selectCurrency({}, initCurrency, false);
+      };
+
+      window.removeEventListener("popstate", onURLStateChange);
+      window.addEventListener("popstate", onURLStateChange);
       btcPrice.currenciesForm.addEventListener("change", selectCurrency);
     } catch (error) {
       console.log(error);
